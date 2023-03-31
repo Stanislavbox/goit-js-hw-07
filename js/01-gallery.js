@@ -18,13 +18,11 @@ const markupItemEl = galleryItems.map(({preview, original, description}) =>
        </a>
      </li>`).join('');
 
-// ? ADD MARKUP IN HTML
-listEl.insertAdjacentHTML('beforeend', markupItemEl)
+listEl.insertAdjacentHTML('beforeend', markupItemEl)// ADD MARKUP IN HTML
 
-// ? CREAT A LISTENER
-listEl.addEventListener('click', onClick);
+listEl.addEventListener('click', onClick);// CREAT A LISTENER ON CLICK
 
-// ? CALLBACK LISTENER FUNCTION
+// ? CALLBACK LISTENER FUNCTION OPEN MODAL ON CLICK
 function onClick(evt){
       evt.preventDefault();
       if (!evt.target.classList.contains('gallery__image')){
@@ -33,5 +31,16 @@ function onClick(evt){
       const instance = basicLightbox.create(`
       <img class="gallery__image" src="${evt.target.dataset.source}" alt="${evt.target.description}"/>
       `)
-instance.show()
+
+      instance.show()
+
+      document.addEventListener('keydown', onEsc)// CREAT A LISTENER ON KEY ESC
+
+// ? CALLBACK LISTENER FUNCTION CLOSE MODAL ON ESC
+      function onEsc(evt){
+            if (evt.key === 'Escape'){
+                  instance.close();
+                  document.removeEventListener('keydown', onEsc);// REMUVE A LISTENER ON KEY ESC
+            }
+      }
 }
