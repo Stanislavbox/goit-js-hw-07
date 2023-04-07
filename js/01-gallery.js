@@ -30,17 +30,23 @@ function onClick(evt){
       }
       const instance = basicLightbox.create(`
       <img class="gallery__image" src="${evt.target.dataset.source}" alt="${evt.target.description}"/>
-      `)
+      `, {
+            onShow: function() {
+                  document.addEventListener('keydown', onEsc); // CREAT A LISTENER ON KEY ESC
+                },
+            onClose: function() {
+                  document.removeEventListener('keydown', onEsc); // document.removeEventListener('keydown', onEsc);// REMUVE A LISTENER ON KEY ESC
+                }
+      })
 
       instance.show()
 
-      document.addEventListener('keydown', onEsc)// CREAT A LISTENER ON KEY ESC
+      
 
 // ? CALLBACK LISTENER FUNCTION CLOSE MODAL ON ESC
       function onEsc(evt){
             if (evt.key === 'Escape'){
                   instance.close();
-                  document.removeEventListener('keydown', onEsc);// REMUVE A LISTENER ON KEY ESC
             }
       }
 }
